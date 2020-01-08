@@ -1,0 +1,12 @@
+werkzeug
+flask
+flask-sqlalchemy
+flask-migrate
+flask-script
+flask-admin
+flask-login
+flask-wtf
+flask-script
+flasgger
+gunicorn
+gevent
