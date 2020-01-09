@@ -15,10 +15,10 @@
         {% endblock %}
 
         <link rel="stylesheet" type="text/css" href="/static/css/vendor/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/vendor/helper.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/pricing.css" />
         <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-
         {% block css %}
+
         {% endblock %}
     </head>
 
@@ -35,6 +35,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('main.pricing') }}">Price</a></li>
 
                     <!-- {% if not current_user.is_authenticated %}
                         <li><a href="{{ url_for('auth.login') }}">Login</a></li>
@@ -61,8 +62,8 @@
             {% endblock %}
         </div>
 
-        <script type="text/javascript" src="/debug/static/js/vendor/jquery.min.js"></script>
-        <script type="text/javascript" src="/debug/static/js/vendor/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
 
         {% block js %}
         {% endblock %}

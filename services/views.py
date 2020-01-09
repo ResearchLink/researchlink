@@ -30,6 +30,10 @@ def index():
         return redirect(url_for('main.index'))
     return render_template('debug.html', form=form)
 
+@bp.route('/pricing', methods=['GET'])
+def pricing():
+    return render_template('index.html')
+
 # @bp.route('/user')
 # @login_required
 # def user():
