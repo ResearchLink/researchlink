@@ -21,8 +21,8 @@ def init_app(config=DebugConfig):
     app = create_app(config)
     app.register_blueprint(views.bp)
     # admin
-    admin.add_view(ModelView(models.Todo, db.session))
-    admin.add_view(ModelView(models.TodoItem, db.session))
+    # admin.add_view(ModelView(models.Todo, db.session))
+    # admin.add_view(ModelView(models.TodoItem, db.session))
     return app
 
 
@@ -62,7 +62,8 @@ def create_app(config, disable_debug_bp=False):
 
 
 def create_logger(app):
-    formatter = Formatter('[%(asctime)s] [%(filename)s:%(lineno)d] [%(levelname)s]\t%(message)s')
+    formatter = Formatter(
+        '[%(asctime)s] [%(filename)s:%(lineno)d] [%(levelname)s]\t%(message)s')
     default_handler.setFormatter(formatter)
 
     file_handler = FileHandler(app.config["LOGGING_FILE"])

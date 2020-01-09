@@ -4,7 +4,34 @@
 
 {% block body %}
     <div class="jumbotron">
-        <h1>Flaskweb</h1>
-        <p>An easy to start yet full-featured web framework</p>
+        <h1>ResearchLink</h1>
+        <p>A easy way to help you find research opportunities</p>
+    </div>
+
+    <h1 class="text-center">Subscribe Us</h1>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form role="form" action="{{ url_for('main.index') }}" method="post">
+                {{ form.hidden_tag() }}
+                {% for f in form if f.type != 'CSRFTokenField' %}
+                    <div class="form-group">
+                        {{ f.label }}
+                        {% if f.errors %}
+                        <ul>
+                            {% for e in f.errors %}
+                            <li>{{ e }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {{ f(class_="form-control") }}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
     </div>
 {% endblock %}
