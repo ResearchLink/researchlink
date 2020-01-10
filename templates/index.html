@@ -3,7 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <a href="{{ url_for('main.index') }}" class="navbar-brand" title="Return to the homepage" id="logo">
+        <img src="/static/img/logo3.png" alt="ResearchLink" height="50px"/>
+    </a>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center">
+        <img src="/static/img/background.png" class="img-fluid rounded" width="100%" height="auto" alt="Responsive image">
+    </div>
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light rounded-circle">
         <div class="col-md-9 p-lg-3 mx-auto my-5">
           <h1 class="text-center">ResearchLink</h1>
           <p class="lead font-weight-normal">ResearchLink, “LinkedIn for researchers”, 
@@ -40,7 +46,7 @@
         </div>
         <div class="col-md-4"></div>
     </div> -->
-    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light rounded">
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfuU95WI-XxZD-ElkqZCqg7Grg3F2-_sKtmT9sL7ES6DxR-bQ/viewform?embedded=true" width="100%" height="1500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
 {% endblock %}
