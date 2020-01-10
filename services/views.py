@@ -28,11 +28,15 @@ def index():
         db.session.add(survey)
         db.session.commit()
         return redirect(url_for('main.index'))
-    return render_template('debug.html', form=form)
+    return render_template('index.html', form=form)
 
 @bp.route('/pricing', methods=['GET'])
 def pricing():
-    return render_template('index.html')
+    return render_template('pricing.html')
+
+
+# -------------- login ---------------------- 
+
 
 # @bp.route('/user')
 # @login_required
@@ -51,6 +55,7 @@ def pricing():
 #     else:
 #         return "login error", 400
 
+# -------------- login ---------------------- 
 
 # @login_required
 # @bp.route('/upload', methods=["POST"])
