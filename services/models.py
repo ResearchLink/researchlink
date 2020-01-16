@@ -15,3 +15,15 @@ class SurveyInfo(db.Model):
 
     def __repr__(self):
         return '<SurveyInfo %r>' % self.email
+
+class Post(db.Model):
+    __tablename__  = "Post"
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    img_addr = db.Column(db.String(140))
+
+    def __repr__(self):
+        return '<Post {}>'.format(self.body)

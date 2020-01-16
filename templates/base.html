@@ -15,7 +15,6 @@
         {% endblock %}
 
         <link rel="stylesheet" type="text/css" href="/static/css/vendor/bootstrap.min.css" />  
-        <link rel="stylesheet" type="text/css" href="/static/css/pricing.css" />
         <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
 
         {% block css %}
@@ -29,9 +28,12 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('main.index') }}">ResearchLink</a>
                 </li>
-                <!-- <li class="nav-item active">
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('main.pricing') }}">Price</a>
-                </li> -->
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('main.explore') }}">Explore</a>
+                </li>
               </ul>
         </nav>
 
@@ -59,7 +61,6 @@
         <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
         <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
         
-        <script type="text/javascript" src="//counter.websiteout.net/js/36/6/0/1"></script>
         {% block js %}
         
         {% endblock %}

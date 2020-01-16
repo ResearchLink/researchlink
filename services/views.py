@@ -1,12 +1,16 @@
 # encoding=utf-8
 
-from flask import request, Blueprint, render_template, redirect, url_for, jsonify, current_app as app
+from flask import request, flash, Blueprint, render_template, redirect, url_for, jsonify, current_app as app
 from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
-from .models import SurveyInfo
+from .models import SurveyInfo, Post
 from .forms import SurveyForm
 import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/home/wzq/document'
+ALLOWED_EXTENSIONS = {'pdf', 'docx', 'doc'}
 
 basedir = os.path.dirname(__file__)
 bp = Blueprint('main', __name__,
@@ -30,12 +34,51 @@ def index():
         return redirect(url_for('main.index'))
     return render_template('index.html', form=form)
 
+# -------------- pricing ----------------------
 @bp.route('/pricing', methods=['GET'])
 def pricing():
+    """
+    This route shows the pricing page
+    """
     return render_template('pricing.html')
 
+# -------------- post ----------------------
 
-# -------------- login ---------------------- 
+
+@bp.route('/explore',  methods=['GET'])
+# @login_required
+def explore():
+    """
+    This route shows all posts
+    """
+    page = request.args.get('page', 1, type=int)
+    # posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+    #     page, app.config['POSTS_PER_PAGE'], False)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, 3, False)
+    next_url = url_for('main.explore', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('main.explore', page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('explore.html', title=('Explore'),
+                           posts=posts.items, next_url=next_url,
+                           prev_url=prev_url)
+
+# -------------- post ----------------------
+@bp.route('/position_detail/<post_id>',  methods=['GET', 'POST'])
+# @login_required
+def position_detail(post_id):
+    """
+    This route shows position detail
+    """
+    # get post by post_id
+    # <!-- <p id="post{{ post.id }}">{{ post.body }}</p> -->
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    return render_template('post.html', post=post)
+
+
+
+# -------------- login ----------------------
 
 
 # @bp.route('/user')
@@ -55,16 +98,28 @@ def pricing():
 #     else:
 #         return "login error", 400
 
-# -------------- login ---------------------- 
+# -------------- upload ----------------------
 
 # @login_required
-# @bp.route('/upload', methods=["POST"])
-# def upload():
-#     fs = request.files['file']
-#     upload_dir = app.config["UPLOAD_DIR"]
-#     if not os.path.exists(upload_dir):
-#         os.makedirs(upload_dir)
-#     filepath = os.path.join(upload_dir, fs.filename)
-#     app.logger.info("saving %s to %s" % (fs, filepath))
-#     fs.save(filepath)
-#     return jsonify({"result": "ok"})
+@bp.route('/api/upload', methods=["POST"])
+def upload_file():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+    file = request.files['file']
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        app.logger.info('Resume saved to ' + os.path.join(UPLOAD_FOLDER, filename))
+        # todo: 存数据库 (usr_id), post_id, document_addr
+    return jsonify({"code": 0, "fileName": "/api/download/" + filename})
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

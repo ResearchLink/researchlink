@@ -2,15 +2,19 @@
 
 {% block title %}Home{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/pricing.css" />
+{% endblock %}
+
 {% block body %}
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Pricing</h1>
-  <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
+  <p class="lead">We are currently offering free service for all researchers.</p>
 </div>
 
-<div class="container" >
-  <div class="card-deck mb-3 text-center">
+<div class="container">
+  <div class="card-deck mb-2 text-center">
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Free</h4>
@@ -18,12 +22,12 @@
       <div class="card-body">
         <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
-          <li>10 users included</li>
-          <li>2 GB of storage</li>
-          <li>Email support</li>
-          <li>Help center access</li>
+          <li>Recommendation of labs and researchers</li>
+          <li>Building your professional profile</li>
+          <li>Sharing ideas inner/cross department</li>
+          <li>Finding your potential partnar</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+        <button type="button" class="btn btn-lg btn-block btn-primary">Sign up for free</button>
       </div>
     </div>
     <div class="card mb-4 shadow-sm">
@@ -31,17 +35,17 @@
         <h4 class="my-0 font-weight-normal">Pro</h4>
       </div>
       <div class="card-body">
-        <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
+        <h1 class="card-title pricing-card-title">$?? <small class="text-muted">/ mo</small></h1>
         <ul class="list-unstyled mt-3 mb-4">
-          <li>20 users included</li>
-          <li>10 GB of storage</li>
-          <li>Priority email support</li>
-          <li>Help center access</li>
+          <li>...</li>
+          <li>How much do you want to pay for it?</li>
+          <li>...</li>
+          <li>...</li>
         </ul>
-        <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Coming</button>
       </div>
     </div>
-    <div class="card mb-4 shadow-sm">
+    <!-- <div class="card mb-4 shadow-sm">
       <div class="card-header">
         <h4 class="my-0 font-weight-normal">Enterprise</h4>
       </div>
@@ -54,7 +58,7 @@
           <li>Help center access</li>
         </ul>
         <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
