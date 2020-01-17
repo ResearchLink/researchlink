@@ -7,8 +7,8 @@
     $(document).ready(function () {
         $("#btn_upload").click(function (event) {
             event.preventDefault();
-            var form_data = new FormData($('#fileUploadForm')[0])
-
+            var form_data = new FormData($('#fileUploadForm')[0]);
+            form_data.append('post_id', '{{ post.id }}');
             $.ajax({
                 type: 'POST',
                 url: '/api/upload',
@@ -31,6 +31,7 @@
 {% endblock %}
 
 {% block body %}
+<h2>Position Description</h2>
 <p id="post{{ post.id }}"> {{ post.body }} </p>
 <h2>Upload your resume</h2>
 <form method="post" enctype="multipart/form-data" , id="fileUploadForm">

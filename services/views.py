@@ -4,7 +4,7 @@ from flask import request, flash, Blueprint, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
-from .models import SurveyInfo, Post
+from .models import SurveyInfo, Post, Application
 from .forms import SurveyForm
 import os
 from werkzeug.utils import secure_filename
@@ -55,7 +55,7 @@ def explore():
     # posts = Post.query.order_by(Post.timestamp.desc()).paginate(
     #     page, app.config['POSTS_PER_PAGE'], False)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-        page, 3, False)
+        page, 6, False)
     next_url = url_for('main.explore', page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) \
@@ -72,7 +72,6 @@ def position_detail(post_id):
     This route shows position detail
     """
     # get post by post_id
-    # <!-- <p id="post{{ post.id }}">{{ post.body }}</p> -->
     post = Post.query.filter_by(id=post_id).first_or_404()
     return render_template('post.html', post=post)
 
@@ -107,6 +106,8 @@ def upload_file():
     if 'file' not in request.files:
         flash('No file part')
     file = request.files['file']
+    post_id = request.form.to_dict()['post_id']
+    
     # if user does not select file, browser also
     # submit an empty part without filename
     if file.filename == '':
@@ -115,9 +116,15 @@ def upload_file():
         filename = secure_filename(file.filename)
         if not os.path.exists(UPLOAD_FOLDER):
             os.makedirs(UPLOAD_FOLDER)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
-        app.logger.info('Resume saved to ' + os.path.join(UPLOAD_FOLDER, filename))
-        # todo: 存数据库 (usr_id), post_id, document_addr
+        resume_addr = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(resume_addr)
+        app.logger.info('Resume saved to ' + resume_addr)
+    
+    # save each application to the db
+    application = Application(post_id=post_id ,
+                    resume_addr=resume_addr)
+    db.session.add(application)
+    db.session.commit()
     return jsonify({"code": 0, "fileName": "/api/download/" + filename})
 
 def allowed_file(filename):

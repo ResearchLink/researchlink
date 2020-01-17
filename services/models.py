@@ -27,3 +27,17 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+class Application(db.Model):
+    
+    __tablename__ = "Application"
+
+    id = db.Column(db.Integer, primary_key=True)
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    post_id = db.Column(db.Integer)
+    resume_addr = db.Column(db.String(140))
+
+    def __repr__(self):
+        return '<Application {}>'.format(self.resume_addr)
+    
