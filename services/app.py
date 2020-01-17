@@ -13,7 +13,7 @@ from gevent.pywsgi import WSGIServer
 
 from flaskweb.app import db, admin
 from configs.config import DebugConfig
-from . import models
+
 from . import views
 
 

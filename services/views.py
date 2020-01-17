@@ -4,15 +4,15 @@ from flask import request, flash, Blueprint, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
-from .models import SurveyInfo, Post, Application
-from .forms import SurveyForm
+from .models import SurveyInfo, Post, Application, Profile
+from .forms import SurveyForm, ProfileForm
 import os
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/home/wzq/document'
+basedir = os.path.dirname(__file__)
+UPLOAD_FOLDER = os.path.join(basedir, "../uploads")
 ALLOWED_EXTENSIONS = {'pdf', 'docx', 'doc'}
 
-basedir = os.path.dirname(__file__)
 bp = Blueprint('main', __name__,
                static_url_path="/static",
                static_folder=os.path.join(basedir, "../static"),
@@ -34,22 +34,26 @@ def index():
         return redirect(url_for('main.index'))
     return render_template('index.html', form=form)
 
+
 # -------------- pricing ----------------------
 @bp.route('/pricing', methods=['GET'])
 def pricing():
     """
     This route shows the pricing page
+    :return:
     """
     return render_template('pricing.html')
+
 
 # -------------- post ----------------------
 
 
-@bp.route('/explore',  methods=['GET'])
+@bp.route('/explore', methods=['GET'])
 # @login_required
 def explore():
     """
     This route shows all posts
+    :return:
     """
     page = request.args.get('page', 1, type=int)
     # posts = Post.query.order_by(Post.timestamp.desc()).paginate(
@@ -64,17 +68,18 @@ def explore():
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
+
 # -------------- post ----------------------
-@bp.route('/position_detail/<post_id>',  methods=['GET', 'POST'])
+@bp.route('/position_detail/<post_id>', methods=['GET', 'POST'])
 # @login_required
 def position_detail(post_id):
     """
     This route shows position detail
+    :return:
     """
     # get post by post_id
     post = Post.query.filter_by(id=post_id).first_or_404()
     return render_template('post.html', post=post)
-
 
 
 # -------------- login ----------------------
@@ -102,12 +107,16 @@ def position_detail(post_id):
 # @login_required
 @bp.route('/api/upload', methods=["POST"])
 def upload_file():
+    """
+    Api for uploading resume
+    :return: json
+    """
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
     file = request.files['file']
     post_id = request.form.to_dict()['post_id']
-    
+
     # if user does not select file, browser also
     # submit an empty part without filename
     if file.filename == '':
@@ -119,14 +128,55 @@ def upload_file():
         resume_addr = os.path.join(UPLOAD_FOLDER, filename)
         file.save(resume_addr)
         app.logger.info('Resume saved to ' + resume_addr)
-    
-    # save each application to the db
-    application = Application(post_id=post_id ,
-                    resume_addr=resume_addr)
-    db.session.add(application)
-    db.session.commit()
-    return jsonify({"code": 0, "fileName": "/api/download/" + filename})
+
+        # save each application to the db
+        application = Application(post_id=post_id,
+                                  resume_addr=resume_addr)
+        db.session.add(application)
+        db.session.commit()
+
+        # todo: send email after sending application
+        # ref: https://www.twilio.com/blog/2018/03/send-email-programmatically-with-gmail-python-and-flask.html
+
+        # todo: fea/enable download after uploading
+        # using restful api
+    return jsonify({"code": 0, "fileName": "/api/download/" + file.filename})
+
 
 def allowed_file(filename):
+    """
+    If the file is of the acceptable extension
+    :param filename: The file name to be checked
+    :return:
+    """
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# -------------- Profile ----------------------
+@bp.route('/profile', methods=["GET", "POST"])
+def profile():
+    """
+    enable this after enable auth
+    :return:
+    """
+    form = ProfileForm()
+    if form.validate_on_submit():
+        pass
+        # user = User(email=form.email.data,
+        #             username=form.username.data,
+        #             password=pswd,
+        #             active=active)
+        # db.session.add(user)
+        # db.session.commit()
+    return render_template('profile.html', form=form)
+
+# -------------- Plaza ----------------------
+@bp.route('/plaza', methods=["GET", "POST"])
+def plaza():
+    """
+    This is the feed
+    todo: how to design pull/push model???
+    todo: how to store it in db?
+    :return:
+    """

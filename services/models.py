@@ -4,7 +4,6 @@ import json
 
 
 class SurveyInfo(db.Model):
-
     __tablename__ = 'SurveyInfo'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -16,8 +15,9 @@ class SurveyInfo(db.Model):
     def __repr__(self):
         return '<SurveyInfo %r>' % self.email
 
+
 class Post(db.Model):
-    __tablename__  = "Post"
+    __tablename__ = "Post"
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -28,8 +28,8 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+
 class Application(db.Model):
-    
     __tablename__ = "Application"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -40,4 +40,20 @@ class Application(db.Model):
 
     def __repr__(self):
         return '<Application {}>'.format(self.resume_addr)
-    
+
+
+class Profile(db.Model):
+    __tablename__ = "Profile"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    email = db.Column(db.String(80))
+    name = db.Column(db.String(80))
+    major = db.Column(db.String(80))
+    education = db.Column(db.String(80))
+    year = db.Column(db.String(80))
+    interests = db.Column(db.String(80))
+
+    def __repr__(self):
+        return '<Profile {}>'.format(self.email)
