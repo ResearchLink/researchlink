@@ -10,3 +10,4 @@ flask-script
 flasgger
 gunicorn
 gevent
+pymysql

@@ -14,7 +14,7 @@ class MyConfig(DebugConfig):
 
 class ProductionConfig(DebugConfig):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://researchlink:researchlink@127.0.0.1:3306/researchlink'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://researchlink:researchlink@172.18.0.1:3306/researchlink'
     LOGGING_FILE = os.path.join(basedir, "logs", "app.log")
     UPLOAD_FOLDER = os.path.join(basedir, "uploads")
 
