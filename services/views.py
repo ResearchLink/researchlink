@@ -162,13 +162,15 @@ def profile():
     """
     form = ProfileForm()
     if form.validate_on_submit():
-        pass
-        # user = User(email=form.email.data,
-        #             username=form.username.data,
-        #             password=pswd,
-        #             active=active)
-        # db.session.add(user)
-        # db.session.commit()
+        profile = Profile(email=form.email.data,
+                          name=form.name.data,
+                          major=form.major.data,
+                          education=form.education.data,
+                          year=form.year.data,
+                          interests=form.interests.data)
+        db.session.add(profile)
+        db.session.commit()
+        return redirect(url_for('main.profile'))
     return render_template('profile.html', form=form)
 
 

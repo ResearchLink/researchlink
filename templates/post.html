@@ -3,39 +3,40 @@
 {% block title %}Home{% endblock %}
 
 {% block js %}
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btn_upload").click(function (event) {
-            event.preventDefault();
-            var form_data = new FormData($('#fileUploadForm')[0]);
-            form_data.append('post_id', '{{ post.id }}');
-            $.ajax({
-                type: 'POST',
-                url: '/api/upload',
-                data: form_data,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function (response) {
-                    if (response != 0) {
-                        alert('file uploaded');
-                    }
-                    else {
-                        alert('file not uploaded');
-                    }
-                },
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn_upload").click(function (event) {
+                event.preventDefault();
+                var form_data = new FormData($('#fileUploadForm')[0]);
+                form_data.append('post_id', '{{ post.id }}');
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/upload',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            alert('file uploaded');
+                        } else {
+                            alert('file not uploaded');
+                        }
+                    },
+                });
             });
         });
-    }); 
-</script>
+    </script>
 {% endblock %}
 
 {% block body %}
-<h2>Position Description</h2>
-<p id="post{{ post.id }}"> {{ post.body }} </p>
-<h2>Upload your resume</h2>
-<form method="post" enctype="multipart/form-data" , id="fileUploadForm">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload" id="btn_upload">
-</form>
+    <h2>Position Description</h2>
+    <p id="post{{ post.id }}abstract"> {{ post.abstract }} </p>
+    <h2>Position Detail</h2>
+    <p id="post{{ post.id }}detail"> {{ post.body }} </p>
+    <h2>Upload your resume</h2>
+    <form method="post" enctype="multipart/form-data" , id="fileUploadForm">
+        <input type="file" name="file" id="file">
+        <input type="submit" value="Upload" id="btn_upload">
+    </form>
 {% endblock %}
