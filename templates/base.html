@@ -2,67 +2,72 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        {% block meta %}
-            <meta name="description" content="">
-            <meta name="author" content="">
-        {% endblock %}
+    {% block meta %}
+        <meta name="description" content="">
+        <meta name="author" content="">
+    {% endblock %}
 
-        <link rel="stylesheet" type="text/css" href="/static/css/vendor/bootstrap.min.css" />  
-        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/vendor/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
 
-        {% block css %}
-        
-        {% endblock %}
-    </head>
+    {% block css %}
 
-    <body>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('main.index') }}">ResearchLink</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('main.pricing') }}">Price</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('main.explore') }}">Explore</a>
-                </li>
-              </ul>
-        </nav>
+    {% endblock %}
+</head>
 
-        <div class="container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('main.index') }}">ResearchLink</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('main.explore') }}">Explore</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('main.plaza') }}">Plaza</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('main.pricing') }}">Price</a>
+        </li>
+    </ul>
+</nav>
 
-            {% block body %}
-            {% endblock %}
-        </div>
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-        <div class="main_container" id="id_main_container">
-            <div class="container_inner" id="display_div_id">
-            </div>
-        </div>
+    {% block body %}
+    {% endblock %}
+</div>
 
-        <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
-        
-        {% block js %}
-        
-        {% endblock %}
-    </body>
+<div class="main_container" id="id_main_container">
+    <div class="container_inner" id="display_div_id">
+    </div>
+</div>
+
+<script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
+
+{% block js %}
+
+{% endblock %}
+</body>
 </html>

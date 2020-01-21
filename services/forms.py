@@ -1,10 +1,8 @@
 # coding=utf-8
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, ValidationError, SelectField
+from wtforms import StringField, PasswordField, SubmitField, ValidationError, SelectField, TextAreaField
 from wtforms.validators import required, optional, Length, Email, Regexp, DataRequired, EqualTo
-
-from .models import SurveyInfo
 
 
 class SurveyForm(FlaskForm):
@@ -36,3 +34,7 @@ class ProfileForm(FlaskForm):
     ])
     interests = StringField('Research area of interest', validators=[
         DataRequired(), Length(1, 64)])
+
+
+class IdeaForm(FlaskForm):
+    idea = TextAreaField('Idea', validators=[DataRequired()])

@@ -57,3 +57,31 @@ class Profile(db.Model):
 
     def __repr__(self):
         return '<Profile {}>'.format(self.email)
+
+
+class Idea_Post(db.Model):
+    __tablename__ = "Idea_Post"
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Idea_Post {}>'.format(self.body)
+
+
+class Idea_Comments(db.Model):
+    __tablename__ = "Idea_Comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    idea_post_id = db.Column(db.Integer)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # img_addr = db.Column(db.String(140))
+
+    def __repr__(self):
+        return '<Idea_Comments {}>'.format(self.body)

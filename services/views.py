@@ -4,8 +4,8 @@ from flask import request, flash, Blueprint, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
-from .models import SurveyInfo, Post, Application, Profile
-from .forms import SurveyForm, ProfileForm
+from .models import SurveyInfo, Post, Application, Profile, Idea_Post, Idea_Comments
+from .forms import SurveyForm, ProfileForm, IdeaForm
 import os
 from werkzeug.utils import secure_filename
 
@@ -46,8 +46,6 @@ def pricing():
 
 
 # -------------- post ----------------------
-
-
 @bp.route('/explore', methods=['GET'])
 # @login_required
 def explore():
@@ -60,11 +58,13 @@ def explore():
     #     page, app.config['POSTS_PER_PAGE'], False)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, 6, False)
+    app.logger.info('Num of posts: ' + str(posts.total))
+
     next_url = url_for('main.explore', page=posts.next_num) \
         if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('explore.html', title=('Explore'),
+    return render_template('explore.html', title='Explore',
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
@@ -171,6 +171,7 @@ def profile():
         # db.session.commit()
     return render_template('profile.html', form=form)
 
+
 # -------------- Plaza ----------------------
 @bp.route('/plaza', methods=["GET", "POST"])
 def plaza():
@@ -178,5 +179,56 @@ def plaza():
     This is the feed
     todo: how to design pull/push model???
     todo: how to store it in db?
+    pull更好实现？
     :return:
     """
+    # receive text inputs
+    form = IdeaForm()
+    # if form.validate_on_submit():
+    # todo: why the validators doesn't work
+    if request.method == 'POST':
+        app.logger.debug('idea received')
+        app.logger.info(form.idea.data)
+        idea_post = Idea_Post(body=form.idea.data)
+        db.session.add(idea_post)
+        db.session.commit()
+        flash('Your idea is now live!')
+        return redirect(url_for('main.plaza'))
+    else:
+        app.logger.debug('----GET----')
+
+    page = request.args.get('page', 1, type=int)
+    # posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+    #     page, app.config['POSTS_PER_PAGE'], False)
+
+    # feeding by timeline
+    # paginate object!!!
+    idea_posts = Idea_Post.query.order_by(Idea_Post.timestamp.desc()).paginate(
+        page, 10, False)
+    app.logger.info('Num of idea posts: ' + str(idea_posts.total))
+
+    next_url = url_for('main.plaza', page=idea_posts.next_num) \
+        if idea_posts.has_next else None
+    prev_url = url_for('main.plaza', page=idea_posts.prev_num) \
+        if idea_posts.has_prev else plaza
+
+    return render_template('plaza.html', title='plaza',
+                           posts=idea_posts.items, next_url=next_url,
+                           prev_url=prev_url, form=form)
+
+
+# -------------- post ----------------------
+@bp.route('/idea_detail/<idea_id>', methods=['GET'])
+# @login_required
+def idea_detail(idea_id):
+    """
+    This route shows feed detail
+    todo: replies to comments
+    :return:
+    """
+    # get post by idea_id
+    idea_post = Idea_Post.query.filter_by(id=idea_id).first_or_404()
+    # get comments by idea_id
+    comments = Idea_Comments.query.filter_by(id=idea_id).order_by(Idea_Comments.timestamp).all()
+
+    return render_template('idea_post.html', idea_post=idea_post, comments=comments)

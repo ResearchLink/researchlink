@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/explore.css"/>
+{% endblock %}
+
+{% block body %}
+
+    <main role="main">
+
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Explore questions!</h1>
+                <p class="lead text-muted">Hey, they are looking for answers!</p>
+            </div>
+        </section>
+
+        <h2>Edit your question</h2>
+        <form role="form" action="{{ url_for('main.plaza') }}" method="post">
+            <div class="form-group">
+                <label class="control-label" for="post">Say something</label>
+                <textarea class="form-control" id="post" name="idea" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <br>
+
+        {% for post in posts %}
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        <a href="{{ url_for('main.idea_detail', idea_id=post.id) }}">
+                            <button type="button" class="btn btn-sm btn-outline-primary">View More</button>
+                        </a>
+                    </td>
+                    <td>
+                        <span id="{{ post.id }}">{{ post.body }}</span>
+                    </td>
+                </tr>
+            </table>
+        {% endfor %}
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous">
+                    <a href="{{ prev_url or '#' }}">
+                        <span aria-hidden="true">&larr;</span> Newer posts
+                    </a>
+                </li>
+                <li class="next">
+                    <a href="{{ next_url or '#' }}">
+                        Older posts <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </main>
+
+{% endblock %}
