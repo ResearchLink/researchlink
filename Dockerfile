@@ -28,3 +28,4 @@ ENTRYPOINT ["./boot.sh"]
 
 # sudo docker build -t rl:test .
 # sudo docker run -d -p 5000:5000 -v /home/ubuntu/Work/uploads:/home/Work/uploads rl:test
+# gunicorn -c gunicorn_config.py wsgi:app
