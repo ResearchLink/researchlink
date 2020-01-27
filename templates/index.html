@@ -2,6 +2,33 @@
 
 {% block title %}Home{% endblock %}
 
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn_upload").click(function (event) {
+                event.preventDefault();
+                var form_data = new FormData($('#fileUploadForm')[0]);
+                form_data.append('post_id', '-1');
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/upload',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            alert('file uploaded');
+                        } else {
+                            alert('file not uploaded');
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     <!--================ Start Home Banner Area =================-->
     <section class="home_banner_area">
@@ -58,7 +85,11 @@
                             is in beast beginning signs open god you're gathering whose gathered cattle let.
                             Creature whales fruit unto meat the life beginning all in under give two.
                         </p> -->
-                        <a class="primary_btn" href="#"><span>Upload CV</span></a>
+                        {#                        <a class="primary_btn" href="#"><span>Upload CV</span></a>#}
+                        <form method="post" enctype="multipart/form-data" , id="fileUploadForm">
+                            <input class="primary_btn" type="file" name="file" id="file">
+                            <input class="primary_btn" type="submit" value="Upload" id="btn_upload">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -494,34 +525,34 @@
     <!--================ End Testimonial Area =================-->
 
     <!--================ Start Newsletter Area =================-->
-    <section class="newsletter_area">
-        <div class="container">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-12">
-                    <div class="subscription_box text-center">
-                        <h2 class="text-uppercase text-white">Subscribe us</h2>
-                        <p class="text-white">
-                            Get the latest research information of your interest.
-                        </p>
-                        <div class="subcribe-form" id="mc_embed_signup">
-                            <form target="_blank" novalidate="true"
-                                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                  method="get" class="subscription relative">
-                                <input name="EMAIL" placeholder="Email address" onfocus="this.placeholder = ''"
-                                       onblur="this.placeholder = 'Email address'" required="" type="email">
-                                <div style="position: absolute; left: -5000px;">
-                                    <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
-                                           type="text">
-                                </div>
-                                <button class="primary-btn hover d-inline">Get Started</button>
-                                <div class="info"></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{#    <section class="newsletter_area">#}
+{#        <div class="container">#}
+{#            <div class="row justify-content-center align-items-center">#}
+{#                <div class="col-lg-12">#}
+{#                    <div class="subscription_box text-center">#}
+{#                        <h2 class="text-uppercase text-white">Subscribe us</h2>#}
+{#                        <p class="text-white">#}
+{#                            Get the latest research information of your interest.#}
+{#                        </p>#}
+{#                        <div class="subcribe-form" id="mc_embed_signup">#}
+{#                            <form target="_blank" novalidate="true"#}
+{#                                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"#}
+{#                                  method="get" class="subscription relative">#}
+{#                                <input name="EMAIL" placeholder="Email address" onfocus="this.placeholder = ''"#}
+{#                                       onblur="this.placeholder = 'Email address'" required="" type="email">#}
+{#                                <div style="position: absolute; left: -5000px;">#}
+{#                                    <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""#}
+{#                                           type="text">#}
+{#                                </div>#}
+{#                                <button class="primary-btn hover d-inline">Get Started</button>#}
+{#                                <div class="info"></div>#}
+{#                            </form>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
     <!--================ End Newsletter Area =================-->
 
     <!--================Footer Area =================-->

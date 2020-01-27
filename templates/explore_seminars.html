@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/explore.css"/>
+{% endblock %}
+
+{% block body %}
+
+    <main role="main">
+
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Find your dream lab!</h1>
+                <p class="lead text-muted">Hey, these labs looking for talented researchers like you!</p>
+                <!-- <p>
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p> -->
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" src="{{ post.img_addr }}"
+                                     alt="lab logo">
+                                <div class="card-body">
+                                    <p class="card-text">{{ post.abstract }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="{{ url_for('main.position_detail', post_id=post.id) }}">
+                                                <button type="button" class="btn btn-sm btn-primary">View More</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous">
+                    <a href="{{ prev_url or '#' }}">
+                        <span aria-hidden="true">&larr;</span> Newer posts
+                    </a>
+                </li>
+                <li class="next">
+                    <a href="{{ next_url or '#' }}">
+                        Older posts <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </main>
+
+{% endblock %}
