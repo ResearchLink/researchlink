@@ -21,12 +21,12 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    position = db.Column(db.String(140))
-    lab = db.Column(db.String(140))
+    lab = db.Column(db.Text)
+    position = db.Column(db.Text)
     details = db.Column(db.Text)
     requirements = db.Column(db.Text)
-    key_words = db.Column(db.String(256))
-    img_addr = db.Column(db.String(140))
+    key_words = db.Column(db.Text)
+    img_addr = db.Column(db.Text)
     # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # lab_name = db.Column(db.String(140))

@@ -42,7 +42,7 @@ class IdeaForm(FlaskForm):
 
 class PostForm(FlaskForm):
     lab = StringField('Lab', validators=[
-        DataRequired(), Length(1, 64)])
+        DataRequired()])
     position = StringField('Position', validators=[
         DataRequired()])
     details = StringField('Details', validators=[
@@ -52,4 +52,4 @@ class PostForm(FlaskForm):
     img_addr = StringField('Upload the link of the lab logo', validators=[
         DataRequired()])
     key_words = StringField('Tags', validators=[
-        DataRequired(), Length(1, 64)])
+        DataRequired()])
