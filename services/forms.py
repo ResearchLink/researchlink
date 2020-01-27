@@ -41,17 +41,15 @@ class IdeaForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    lab_name = StringField('Lab Name', validators=[
+    lab = StringField('Lab', validators=[
         DataRequired(), Length(1, 64)])
-    abstract = StringField('Lab Description', validators=[
+    position = StringField('Position', validators=[
         DataRequired()])
-    body = StringField('Lab Detail', validators=[
+    details = StringField('Details', validators=[
         DataRequired()])
     requirements = StringField('Requirements', validators=[
         DataRequired()])
-    about = StringField('About', validators=[
-        DataRequired()])
     img_addr = StringField('Upload the link of the lab logo', validators=[
         DataRequired()])
-    tags = StringField('Tags', validators=[
+    key_words = StringField('Tags', validators=[
         DataRequired(), Length(1, 64)])

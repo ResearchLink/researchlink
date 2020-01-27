@@ -30,15 +30,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ post.lab_name }}</h1>
+    <h1>{{ post.lab }}</h1>
     <h2>Position Description</h2>
-    <p id="post{{ post.id }}abstract"> {{ post.abstract }} </p>
+    <p id="post{{ post.id }}abstract"> {{ post.position }} </p>
     <h2>Position Detail</h2>
-    <p id="post{{ post.id }}detail"> {{ post.body }} </p>
+    <p id="post{{ post.id }}detail"> {{ post.details }} </p>
     <h2>Requirements</h2>
     <p id="post{{ post.id }}requirements"> {{ post.requirements }} </p>
-    <h2>About</h2>
-    <p id="post{{ post.id }}about"> {{ post.about }} </p>
     <h2>Upload your resume</h2>
     <form method="post" enctype="multipart/form-data" , id="fileUploadForm">
         <input type="file" name="file" id="file">

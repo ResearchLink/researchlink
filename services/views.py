@@ -89,13 +89,12 @@ def edit_post():
     """
     form = PostForm()
     if form.validate_on_submit():
-        postform = Post(lab_name=form.lab_name.data,
-                        abstract=form.abstract.data,
-                        body=form.body.data,
+        postform = Post(lab=form.lab.data,
+                        position=form.position.data,
+                        details=form.details.data,
                         requirements=form.requirements.data,
-                        about=form.about.data,
                         img_addr=form.img_addr.data,
-                        tags=form.tags.data)
+                        key_words=form.key_words.data)
         db.session.add(postform)
         db.session.commit()
         return redirect(url_for('main.edit_post'))
@@ -254,3 +253,15 @@ def idea_detail(idea_id):
     comments = Idea_Comments.query.filter_by(id=idea_id).order_by(Idea_Comments.timestamp).all()
 
     return render_template('idea_post.html', idea_post=idea_post, comments=comments)
+
+
+# -------------- Seminar ----------------------
+@bp.route('/seminars', methods=['GET'])
+# @login_required
+def seminars(idea_id):
+    """
+    This route shows feed detail
+    todo: replies to comments
+    :return:
+    """
+    pass
