@@ -38,3 +38,20 @@ class ProfileForm(FlaskForm):
 
 class IdeaForm(FlaskForm):
     idea = TextAreaField('Idea', validators=[DataRequired()])
+
+
+class PostForm(FlaskForm):
+    lab_name = StringField('Lab Name', validators=[
+        DataRequired(), Length(1, 64)])
+    abstract = StringField('Lab Description', validators=[
+        DataRequired()])
+    body = StringField('Lab Detail', validators=[
+        DataRequired()])
+    requirements = StringField('Requirements', validators=[
+        DataRequired()])
+    about = StringField('About', validators=[
+        DataRequired()])
+    img_addr = StringField('Upload the link of the lab logo', validators=[
+        DataRequired()])
+    tags = StringField('Tags', validators=[
+        DataRequired(), Length(1, 64)])

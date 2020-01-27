@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
 from .models import SurveyInfo, Post, Application, Profile, Idea_Post, Idea_Comments
-from .forms import SurveyForm, ProfileForm, IdeaForm
+from .forms import SurveyForm, ProfileForm, IdeaForm, PostForm
 import os
 from werkzeug.utils import secure_filename
 
@@ -69,7 +69,6 @@ def explore():
                            prev_url=prev_url)
 
 
-# -------------- post ----------------------
 @bp.route('/position_detail/<post_id>', methods=['GET', 'POST'])
 # @login_required
 def position_detail(post_id):
@@ -80,6 +79,27 @@ def position_detail(post_id):
     # get post by post_id
     post = Post.query.filter_by(id=post_id).first_or_404()
     return render_template('post.html', post=post)
+
+
+@bp.route('/edit/post', methods=["GET", "POST"])
+def edit_post():
+    """
+    enable this after enable auth
+    :return:
+    """
+    form = PostForm()
+    if form.validate_on_submit():
+        postform = Post(lab_name=form.lab_name.data,
+                        abstract=form.abstract.data,
+                        body=form.body.data,
+                        requirements=form.requirements.data,
+                        about=form.about.data,
+                        img_addr=form.img_addr.data,
+                        tags=form.tags.data)
+        db.session.add(postform)
+        db.session.commit()
+        return redirect(url_for('main.edit_post'))
+    return render_template('post-edit.html', form=form)
 
 
 # -------------- login ----------------------
@@ -154,7 +174,7 @@ def allowed_file(filename):
 
 
 # -------------- Profile ----------------------
-@bp.route('/profile', methods=["GET", "POST"])
+@bp.route('/edit/profile', methods=["GET", "POST"])
 def profile():
     """
     enable this after enable auth
