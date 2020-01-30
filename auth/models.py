@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     authenticated = db.Column(db.Boolean, default=False)
     active = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
+    profile_id = db.Column(db.Integer, foreign_key="Profile.id")
 
     def check_password(self, value):
         return check_password_hash(self.password, value)

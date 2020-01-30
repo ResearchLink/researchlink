@@ -4,7 +4,33 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="/static/css/explore.css"/>
+    <style>
+        .mui-ellipsis-3 {
+            display: -webkit-box;
+            overflow: hidden;
+            {#white-space: normal !important;#}
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        {#.innerCtn {#}
+        {#    text-indent: 1rem;#}
+        {#    line-height: 0.8rem;#}
+        {#    font-size: 0.5rem;#}
+        {#}#}
+    </style>
 {% endblock %}
+
+<script type="text/javascript">
+    $(function () {//显示三行 多余隐藏 点击展开
+        $('.innerCtn').click(function () {
+            $(this).children(0).removeClass('mui-ellipsis-3');
+        });
+    });
+</script>
+
 
 {% block body %}
 
@@ -23,7 +49,6 @@
 
         <div class="album py-5 bg-light">
             <div class="container">
-
                 <div class="row">
                     {% for post in posts %}
                         <div class="col-md-4">
@@ -31,10 +56,10 @@
                                 <img class="card-img-top" src="{{ post.img_addr }}"
                                      alt="lab logo">
                                 <div class="card-body">
-                                    <p class="card-text">{{ post.abstract }}</p>
+                                    <p class="card-text mui-ellipsis-3">{{ post.lab }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a href="{{ url_for('main.position_detail', post_id=post.id) }}">
+                                            <a href="{{ url_for('main.post_detail', post_id=post.id) }}">
                                                 <button type="button" class="btn btn-sm btn-primary">View More</button>
                                             </a>
                                         </div>

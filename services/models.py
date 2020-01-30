@@ -27,6 +27,7 @@ class Post(db.Model):
     requirements = db.Column(db.Text)
     key_words = db.Column(db.Text)
     img_addr = db.Column(db.Text)
+
     # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # lab_name = db.Column(db.String(140))
@@ -59,7 +60,6 @@ class Profile(db.Model):
     __tablename__ = "Profile"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     email = db.Column(db.String(80))
     name = db.Column(db.String(80))
@@ -67,6 +67,10 @@ class Profile(db.Model):
     education = db.Column(db.String(80))
     year = db.Column(db.String(80))
     interests = db.Column(db.String(80))
+
+    # this is for profs
+    title = db.Column(db.String(80))
+    bio = db.Column(db.Text)
 
     def __repr__(self):
         return '<Profile {}>'.format(self.email)
@@ -99,3 +103,22 @@ class Idea_Comments(db.Model):
 
     def __repr__(self):
         return '<Idea_Comments {}>'.format(self.body)
+
+
+class Seminars(db.Model):
+    __tablename__ = "Seminars"
+
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    seminar_name = db.Column(db.Text)
+    title = db.Column(db.Text)
+    speaker_name = db.Column(db.Text)
+    speaker_department = db.Column(db.Text)
+    speaker_description = db.Column(db.Text)
+    time = db.Column(db.Text)  # the time the seminar happens
+    address = db.Column(db.Text)
+    abstract = db.Column(db.Text)
+    key_words = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Seminar {}>'.format(self.title)
