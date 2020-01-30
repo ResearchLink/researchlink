@@ -60,9 +60,9 @@ def posts():
         page, 6, False)
     app.logger.info('Num of posts: ' + str(posts.total))
 
-    next_url = url_for('main.explore', page=posts.next_num) \
+    next_url = url_for('main.posts', page=posts.next_num) \
         if posts.has_next else None
-    prev_url = url_for('main.explore', page=posts.prev_num) \
+    prev_url = url_for('main.posts', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('posts.html', title='Explore',
                            posts=posts.items, next_url=next_url,
@@ -275,7 +275,7 @@ def seminars():
     next_url = url_for('main.seminars', page=seminars.next_num) \
         if seminars.has_next else None
     prev_url = url_for('main.seminars', page=seminars.prev_num) \
-        if seminars.has_prev else seminars
+        if seminars.has_prev else None
 
     return render_template('seminars.html', title='Seminars',
                            posts=seminars.items,

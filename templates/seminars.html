@@ -34,20 +34,11 @@
                 </tr>
             </table>
         {% endfor %}
-        <nav aria-label="...">
-            <ul class="pager">
-                <li class="previous">
-                    <a href="{{ prev_url or '#' }}">
-                        <span aria-hidden="true">&larr;</span> Newer posts
-                    </a>
-                </li>
-                <li class="next">
-                    <a href="{{ next_url or '#' }}">
-                        Older posts <span aria-hidden="true">&rarr;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not prev_url %} disabled{% endif %}"><a class="page-link" href="{{ prev_url or '#' }}">Previous</a></li>
+            <li class="page-item {% if not next_url %} disabled{% endif %}"><a class="page-link" href="{{ next_url or '#' }}">Next</a></li>
+        </ul>
 
     </main>
 

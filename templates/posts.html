@@ -8,8 +8,7 @@
         .mui-ellipsis-3 {
             display: -webkit-box;
             overflow: hidden;
-            {#white-space: normal !important;#}
-            text-overflow: ellipsis;
+        {#white-space: normal !important;#} text-overflow: ellipsis;
             word-wrap: break-word;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -19,7 +18,8 @@
         {#    text-indent: 1rem;#}
         {#    line-height: 0.8rem;#}
         {#    font-size: 0.5rem;#}
-        {#}#}
+        {
+        #}#}
     </style>
 {% endblock %}
 
@@ -72,20 +72,14 @@
             </div>
         </div>
 
-        <nav aria-label="...">
-            <ul class="pager">
-                <li class="previous">
-                    <a href="{{ prev_url or '#' }}">
-                        <span aria-hidden="true">&larr;</span> Newer posts
-                    </a>
-                </li>
-                <li class="next">
-                    <a href="{{ next_url or '#' }}">
-                        Older posts <span aria-hidden="true">&rarr;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not prev_url %} disabled{% endif %}"><a class="page-link"
+                                                                               href="{{ prev_url or '#' }}">Previous</a>
+            </li>
+            <li class="page-item {% if not next_url %} disabled{% endif %}"><a class="page-link"
+                                                                               href="{{ next_url or '#' }}">Next</a>
+            </li>
+        </ul>
 
     </main>
 
