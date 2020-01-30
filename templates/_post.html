@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btn_upload").click(function (event) {
+                event.preventDefault();
+                var form_data = new FormData($('#fileUploadForm')[0]);
+                form_data.append('post_id', '{{ post.id }}');
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/upload',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response != 0) {
+                            alert('file uploaded');
+                        } else {
+                            alert('file not uploaded');
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ post.lab }}</h1>
+    <h2>Position Description</h2>
+    <p id="post{{ post.id }}abstract"> {{ post.position }} </p>
+    <h2>Position Detail</h2>
+    <p id="post{{ post.id }}detail"> {{ post.details }} </p>
+    <h2>Requirements</h2>
+    <p id="post{{ post.id }}requirements"> {{ post.requirements }} </p>
+    <h2>Upload your resume</h2>
+    <form method="post" enctype="multipart/form-data" , id="fileUploadForm">
+        <input type="file" name="file" id="file">
+        <input type="submit" value="Upload" id="btn_upload">
+    </form>
+{% endblock %}

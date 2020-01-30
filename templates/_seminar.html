@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div style="text-align:center">
+        <h2>{{ seminar.seminar_name }}</h2>
+        <h1> {{ seminar.title }} </h1>
+    </div>
+
+    <div style="text-align:center">
+        <p>{{ seminar.speaker_name }}</p>
+        <p>{{ seminar.speaker_department }}</p>
+        <p>{{ seminar.address }}</p>
+        <p>{{ seminar.time }}</p>
+    </div>
+
+    <p>
+        {{ seminar.abstract }}
+    </p>
+{% endblock %}

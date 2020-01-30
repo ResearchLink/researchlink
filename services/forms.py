@@ -1,7 +1,8 @@
 # coding=utf-8
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, ValidationError, SelectField, TextAreaField
+from wtforms import StringField, PasswordField, \
+    SubmitField, ValidationError, SelectField, TextAreaField, DateTimeField
 from wtforms.validators import required, optional, Length, Email, Regexp, DataRequired, EqualTo
 
 
@@ -41,15 +42,36 @@ class IdeaForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    lab = StringField('Lab', validators=[
-        DataRequired()])
     position = StringField('Position', validators=[
         DataRequired()])
-    details = StringField('Details', validators=[
+    lab = StringField('Lab', validators=[
         DataRequired()])
-    requirements = StringField('Requirements', validators=[
+    details = TextAreaField('Details', validators=[
+        DataRequired()])
+    requirements = TextAreaField('Requirements', validators=[
         DataRequired()])
     img_addr = StringField('Upload the link of the lab logo', validators=[
         DataRequired()])
-    key_words = StringField('Tags', validators=[
+    key_words = StringField('key_words', validators=[
+        DataRequired()])
+
+
+class SeminarForm(FlaskForm):
+    seminar_name = StringField('seminar_name', validators=[
+        DataRequired()])
+    title = StringField('title', validators=[
+        DataRequired()])
+    speaker_name = StringField('speaker_name', validators=[
+        DataRequired()])
+    speaker_department = StringField('speaker_department', validators=[
+        DataRequired()])
+    speaker_description = StringField('speaker_description', validators=[
+        DataRequired()])
+    time = StringField('time', validators=[
+        DataRequired()])
+    address = StringField('address', validators=[
+        DataRequired()])
+    abstract = TextAreaField('abstract', validators=[
+        DataRequired()])
+    key_words = StringField('key_words', validators=[
         DataRequired()])

@@ -4,8 +4,8 @@ from flask import request, flash, Blueprint, render_template, redirect, url_for,
 from flask_login import login_required, current_user
 from flaskweb.app import db
 from auth.views import check_user_login
-from .models import SurveyInfo, Post, Application, Profile, Idea_Post, Idea_Comments
-from .forms import SurveyForm, ProfileForm, IdeaForm, PostForm
+from .models import SurveyInfo, Post, Application, Profile, Idea_Post, Idea_Comments, Seminars
+from .forms import SurveyForm, ProfileForm, IdeaForm, PostForm, SeminarForm
 import os
 from werkzeug.utils import secure_filename
 
@@ -46,9 +46,9 @@ def pricing():
 
 
 # -------------- post ----------------------
-@bp.route('/explore', methods=['GET'])
+@bp.route('/posts', methods=['GET'])
 # @login_required
-def explore():
+def posts():
     """
     This route shows all posts
     :return:
@@ -64,21 +64,21 @@ def explore():
         if posts.has_next else None
     prev_url = url_for('main.explore', page=posts.prev_num) \
         if posts.has_prev else None
-    return render_template('explore.html', title='Explore',
+    return render_template('posts.html', title='Explore',
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
 
-@bp.route('/position_detail/<post_id>', methods=['GET', 'POST'])
+@bp.route('/posts/<post_id>', methods=['GET', 'POST'])
 # @login_required
-def position_detail(post_id):
+def post_detail(post_id):
     """
     This route shows position detail
     :return:
     """
     # get post by post_id
     post = Post.query.filter_by(id=post_id).first_or_404()
-    return render_template('post.html', post=post)
+    return render_template('_post.html', post=post)
 
 
 @bp.route('/edit/post', methods=["GET", "POST"])
@@ -98,7 +98,7 @@ def edit_post():
         db.session.add(postform)
         db.session.commit()
         return redirect(url_for('main.edit_post'))
-    return render_template('post-edit.html', form=form)
+    return render_template('edit_post.html', form=form)
 
 
 # -------------- login ----------------------
@@ -258,10 +258,61 @@ def idea_detail(idea_id):
 # -------------- Seminar ----------------------
 @bp.route('/seminars', methods=['GET'])
 # @login_required
-def seminars(idea_id):
+def seminars():
     """
     This route shows feed detail
     todo: replies to comments
     :return:
     """
-    pass
+    page = request.args.get('page', 1, type=int)
+    # feeding by timeline
+    # pagination object!!!
+    seminars = Seminars.query \
+        .order_by(Seminars.timestamp.desc()).paginate(page, 10, False)
+    print(seminars.items[0])
+    app.logger.info('Num of seminars: ' + str(seminars.total))
+
+    next_url = url_for('main.seminars', page=seminars.next_num) \
+        if seminars.has_next else None
+    prev_url = url_for('main.seminars', page=seminars.prev_num) \
+        if seminars.has_prev else seminars
+
+    return render_template('seminars.html', title='Seminars',
+                           posts=seminars.items,
+                           next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/seminars/<seminar_id>', methods=['GET'])
+def seminar_detail(seminar_id):
+    """
+    This route shows feed detail
+    todo: Profile的设计
+    :return:
+    """
+    # get post by idea_id
+    seminar = Seminars.query.filter_by(id=seminar_id).first_or_404()
+
+    return render_template('_seminar.html', seminar=seminar)
+
+
+@bp.route('/edit/seminar', methods=["GET", "POST"])
+def edit_seminar():
+    """
+    enable this after enable auth
+    :return:
+    """
+    form = SeminarForm()
+    if form.validate_on_submit():
+        seminarform = Seminars(seminar_name=form.seminar_name.data,
+                               title=form.title.data,
+                               speaker_name=form.speaker_name.data,
+                               speaker_department=form.speaker_department.data,
+                               speaker_description=form.speaker_description.data,
+                               time=form.time.data,
+                               address=form.address.data,
+                               abstract=form.abstract.data,
+                               key_words=form.key_words.data)
+        db.session.add(seminarform)
+        db.session.commit()
+        return redirect(url_for('main.edit_seminar'))
+    return render_template('edit_seminar.html', form=form)

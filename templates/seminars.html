@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/explore.css"/>
+{% endblock %}
+
+{% block body %}
+
+    <main role="main">
+
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Explore seminar information!</h1>
+                <p class="lead text-muted">Find what's going on in the campus!</p>
+            </div>
+        </section>
+
+        {% for post in posts %}
+            <table class="table table-hover">
+                <tr width="100%">
+                    <td width="20%">
+                        <a href="{{ url_for('main.seminar_detail', seminar_id=post.id) }}">
+                            <button type="button" class="btn btn-sm btn-outline-primary">View More</button>
+                        </a>
+                    </td>
+                    <td width="40%">
+                        <h6 class="text-left" id="{{ post.id }}">{{ post.title }}</h6>
+                    </td>
+                    <td width="40%">
+                        <span class="text-left" id="{{ post.id }}">{{ post.speaker_name }}</span>
+                    </td>
+                </tr>
+            </table>
+        {% endfor %}
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous">
+                    <a href="{{ prev_url or '#' }}">
+                        <span aria-hidden="true">&larr;</span> Newer posts
+                    </a>
+                </li>
+                <li class="next">
+                    <a href="{{ next_url or '#' }}">
+                        Older posts <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </main>
+
+{% endblock %}
