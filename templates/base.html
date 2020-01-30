@@ -70,6 +70,7 @@
 
 <script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/vendor/bootstrap.min.js"></script>
+<script src=" https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156251860-1"></script>
@@ -84,7 +85,15 @@
 
     gtag('config', 'UA-156251860-1');
 </script>
-
+<script>
+    function convert(i) {
+        var converter = new showdown.Converter();
+        var text = document.getElementById("plain_style" + i).innerHTML;
+        {#var text = document.getElementById("markdown_style").text;#}
+        var html = converter.makeHtml(text);
+        document.getElementById("markdown_style" + i).innerHTML = html;
+    }
+</script>
 
 {% block js %}
 

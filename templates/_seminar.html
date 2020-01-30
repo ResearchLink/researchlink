@@ -2,9 +2,14 @@
 
 {% block title %}Home{% endblock %}
 
+{% block js %}
+    <script>
+        window.onload = convert(1);
+    </script>
+{% endblock %}
 {% block body %}
     <div style="text-align:center">
-        <h2>{{ seminar.seminar_name }}</h2>
+        <h4>{{ seminar.seminar_name }}</h4>
         <h1> {{ seminar.title }} </h1>
     </div>
 
@@ -16,6 +21,8 @@
     </div>
 
     <p>
-        {{ seminar.abstract }}
+    <p id="plain_style1" style="display: none"> {{ seminar.abstract }} </p>
+    <p id="markdown_style1"></p>
+
     </p>
 {% endblock %}

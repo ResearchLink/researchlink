@@ -26,19 +26,28 @@
                 });
             });
         });
+
+        window.onload = convert(1);
+        window.onload = convert(2);
     </script>
+
 {% endblock %}
 
 {% block body %}
     <h1>{{ post.lab }}</h1>
     <h2>Position Description</h2>
+
     <p id="post{{ post.id }}abstract"> {{ post.position }} </p>
     <h2>Position Detail</h2>
-    <p id="post{{ post.id }}detail"> {{ post.details }} </p>
+    <p id="plain_style1" style="display: none"> {{ post.details }} </p>
+    <p id="markdown_style1"></p>
+
     <h2>Requirements</h2>
-    <p id="post{{ post.id }}requirements"> {{ post.requirements }} </p>
+    <p id="plain_style2" style="display: none"> {{ post.requirements }} </p>
+    <p id="markdown_style2"></p>
+
     <h2>Upload your resume</h2>
-    <form method="post" enctype="multipart/form-data" , id="fileUploadForm">
+    <form method="post" enctype="multipart/form-data" id="fileUploadForm">
         <input type="file" name="file" id="file">
         <input type="submit" value="Upload" id="btn_upload">
     </form>

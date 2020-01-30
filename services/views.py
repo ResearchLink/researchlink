@@ -231,7 +231,7 @@ def plaza():
     next_url = url_for('main.plaza', page=idea_posts.next_num) \
         if idea_posts.has_next else None
     prev_url = url_for('main.plaza', page=idea_posts.prev_num) \
-        if idea_posts.has_prev else plaza
+        if idea_posts.has_prev else None
 
     return render_template('plaza.html', title='plaza',
                            posts=idea_posts.items, next_url=next_url,
