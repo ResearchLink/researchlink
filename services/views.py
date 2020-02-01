@@ -269,7 +269,6 @@ def seminars():
     # pagination object!!!
     seminars = Seminars.query \
         .order_by(Seminars.timestamp.desc()).paginate(page, 10, False)
-    print(seminars.items[0])
     app.logger.info('Num of seminars: ' + str(seminars.total))
 
     next_url = url_for('main.seminars', page=seminars.next_num) \
